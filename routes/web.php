@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::Post('/Register','login@registor');
 Route::post('/Login','login@loginaccount');
 Route::post('/restpassword','login@resetpassword');
+Route::post('/updateuser','login@updateuser');
 
 
 
