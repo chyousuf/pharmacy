@@ -68,8 +68,6 @@ class login extends Controller
         if(!$password){
             return response(['status'=>'false','code'=>'Missing Password'], 200);
         }
-
-
        if(User::where('email',$email)->where('password',$password)->count() > 0){
            $user_data = User::where('email',$email)->get();
            return response(['status'=>'true','Code'=>'Login successfully','data'=>$user_data], 200);
@@ -96,7 +94,6 @@ class login extends Controller
         }
     }
 
-
     public  function updateuser(Request $request){
 
 
@@ -111,8 +108,6 @@ class login extends Controller
         $password = Input::post('password');
         $contact_details = Input::post('contact_details');
         $location = Input::post('location');
-
-
          $update = User::where('id', $user_id)  // find your user by their email
             ->limit(1)  // optional - to ensure only one record is updated.
             ->update(array('pharmacy_name' => $pharmacy_name,'email'=>$email,'password'=> $password,'contact_details'=>$contact_details,'location'=> $location));
@@ -126,11 +121,5 @@ class login extends Controller
              return response(['status'=>'false','Code'=>'Upload failure'], 200);
          }
     }
-
-
-
-
-
-
 
 }
