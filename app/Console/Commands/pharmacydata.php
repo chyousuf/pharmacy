@@ -1,15 +1,43 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Console\Commands;
 use App\pharmacy;
+use Illuminate\Console\Command;
 
-class place extends Controller
+class pharmacydata extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'add:pharmacy';
 
-    public function insert()
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Add pharmacy Data to DB from Google API';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $place_datas = pharmacy::all();
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+       $place_datas = pharmacy::all();
 
         $json = file_get_contents('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=31.4682768,74.3175462&radius=1000000&type=pharmacy&key=AIzaSyAiTFG3KiPlIH3-aW9zraJ749cEU8yuA7M');
         $obj = json_decode($json);
@@ -19,7 +47,7 @@ class place extends Controller
             $place_id = $obj->results[$i]->place_id;
             $place_lat = $obj->results[$i]->geometry->location->lat;
             $place_lng = $obj->results[$i]->geometry->location->lng;
-            if ($place_datas[$i]["place_id"] != $place_id) {
+           if ($place_datas[$i]["place_id"] != $place_id) {
                 $place = new pharmacy();
                 $place->place_id = $place_id;
                 $place->place_name = $place_name;
@@ -49,5 +77,7 @@ class place extends Controller
         } else {
             return response(['status' => 'false', 'code' => "Not Save"], 200);
         }
+        $this->info('Pharmacy Add successfully!');
     }
+
 }

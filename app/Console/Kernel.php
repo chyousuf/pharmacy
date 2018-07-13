@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\HappyBirthday'
+        'App\Console\Commands\HappyBirthday',
+        'App\Console\Commands\pharmacydata'
     ];
 
     /**
@@ -26,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('sms:birthday')->daily();
+        $schedule->command('add:pharmacy')->daily();
     }
 
     /**
