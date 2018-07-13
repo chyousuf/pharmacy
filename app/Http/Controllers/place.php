@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\pharmacy;
+use Illuminate\Support\Facades\Input;
 
 class place extends Controller
 {
-
-    public function insert()
+    public function insert(Request $request)
     {
+        $lat = Input::post('lat');
+        $lng = Input::post('lng');
         $place_datas = pharmacy::all();
 
-        $json = file_get_contents('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=31.4682768,74.3175462&radius=1000000&type=pharmacy&key=AIzaSyAiTFG3KiPlIH3-aW9zraJ749cEU8yuA7M');
+        $json = file_get_contents('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='.$lat.','.$lng.'&radius=1000&type=pharmacy&key=AIzaSyAiTFG3KiPlIH3-aW9zraJ749cEU8yuA7M');
         $obj = json_decode($json);
         $count = count($obj->results);
         for ($i = 0; $i < $count; $i++) {
@@ -37,7 +39,6 @@ class place extends Controller
             if (isset($obj1->result->formatted_phone_number)) {
                 $place_address = $obj1->result->formatted_address;
                 $place_phone = $obj1->result->formatted_phone_number;
-
             } else {
                 $place_address = $obj1->result->formatted_address;
                 $place_phone = null;
@@ -45,7 +46,8 @@ class place extends Controller
             $upload = pharmacy::where('place_id', $place_data[$i]["place_id"])->limit(1)->update(['place_address' => $place_address, 'place_number' => $place_phone]);
         }
         if ($upload > 0) {
-            return response(['status' => 'true', 'code' => "Save"], 200);
+           // $getdata = pharmacy::all();
+            return response(['status' => 'true', 'result' => $getdata], 200);
         } else {
             return response(['status' => 'false', 'code' => "Not Save"], 200);
         }
