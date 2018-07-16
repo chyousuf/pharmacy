@@ -19,6 +19,9 @@ Route::post('/Login','login@loginaccount');
 Route::post('/restpassword','login@resetpassword');
 Route::post('/updateuser','login@updateuser');
 Route::post('/insertplace','place@insert');
+Route::post('/searchplace','place@searchplace');
+Route::post('/count','place@countclick');
+
 
 
 

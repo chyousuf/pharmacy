@@ -54,7 +54,7 @@ class pharmacydata extends Command
                 $place->place_lat = $place_lat;
                 $place->place_lng = $place_lng;
                 $place->save();
-            }
+           }
         }
         $place_data = pharmacy::all();
         $count1 = count($place_data);

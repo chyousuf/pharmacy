@@ -49,6 +49,9 @@ class login extends Controller
         $user->location = $location;
         $user->lat = Input::post('lat');
         $user->lng = Input::post('lng');
+        $user->website =  Input::post('website');
+        $user->close_hr =  Input::post('close_hr');
+        $user->start_hr=  Input::post('start_hr');
         $user->save();
 
         $user_data = User::where('email',$email)->get();
@@ -108,9 +111,12 @@ class login extends Controller
         $password = Input::post('password');
         $contact_details = Input::post('contact_details');
         $location = Input::post('location');
+        $website =  Input::post('website');
+        $close_hr =  Input::post('close_hr');
+        $start_hr=  Input::post('start_hr');
          $update = User::where('id', $user_id)  // find your user by their email
             ->limit(1)  // optional - to ensure only one record is updated.
-            ->update(array('pharmacy_name' => $pharmacy_name,'email'=>$email,'password'=> $password,'contact_details'=>$contact_details,'location'=> $location));
+            ->update(array('pharmacy_name' => $pharmacy_name,'email'=>$email,'password'=> $password,'contact_details'=>$contact_details,'location'=> $location,'website'=> $website,'close_hr'=> $close_hr,'start_hr'=> $start_hr));
 
          if ($update > 0){
 
