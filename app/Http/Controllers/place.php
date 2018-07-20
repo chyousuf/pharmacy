@@ -147,5 +147,12 @@ class place extends Controller
 
     }
 
+    public function getcountpharmacy(){
+
+
+        $count_data = pharmacy::where('count','>','1')->get();
+        return view('reports',compact('count_data'));
+    }
+
 
 }

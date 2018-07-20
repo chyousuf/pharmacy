@@ -22,6 +22,7 @@ Route::post('/insertplace','place@insert');
 Route::post('/searchplace','place@searchplace');
 Route::post('/count','place@countclick');
 
+Route::get('/reports','place@getcountpharmacy');
 
 
 
